@@ -1,11 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/fontstyles.css') }}">
+
 </head>
+
 <body>
 
     <!-- Navigation Bar (Header) -->
@@ -31,37 +41,32 @@
     <form method="POST" action="{{ route('signup.submit') }}">
     @csrf
 
-    <label for="id">Enter ID:</label>
-    <input type="text" name="id" id="id" placeholder="00-000000" required>
-    <br>
-
-    <label for="email">Enter Email:</label>
-    <input type="email" name="email" id="email" placeholder="@my.jru.edu" required>
-    <br>
-
-    <label for="password">Enter Password:</label>
-    <input type="password" name="password" id="password" placeholder="password" required>
-    <br>
-
-    <label for="confirm_password">Confirm Password:</label>
-    <input type="password" name="confirm_password" id="confirm_password" placeholder="confirm password" required>
-    <br>
-
-    <!-- Wrapper for the button and label -->
-    <div class="send-code-wrapper">
-        <button type="button" id="send-code">Send Code</button>
-        <input type="text" name="verification_code" id="verification_code" placeholder="Verification Code" required>
+    <h3 class="normal">Create your <span class="husayhub">HusayHub</span> Account</h2>
+    <div class="input-container">
+    <input type="text" name="id" id="id" placeholder=" " required pattern="^\d{2}-\d{6}$" title="Please enter ID in the format: 00-000000">
+    <label for="id">Enter JRU ID</label>
+    <span class="format-hint">00-000000</span>
     </div>
-    <br>
+
+    <div class="input-container">
+    <input type="email" name="email" id="email" placeholder=" " required>
+    <label for="email">Enter Email</label>
+
+    </div>
+
+    <div class="input-container">
+    <input type="password" name="password" id="password" placeholder=" " >
+    <label for="password">Enter Password</label>
+    </div>
+
+    <div class="input-container">
+    <input type="password" name="confirm_password" id="confirm_password" placeholder=" " required>
+    <label for="confirm_password">Confirm Password</label>
+    </div>
 
     <button type="submit">Sign Up</button>
 </form>
 
-<script>
-    document.getElementById('send-code').addEventListener('click', function () {
-        alert('Verification code sent to your email! (Simulate via backend later)');
-    });
-</script>
-
+@vite(['resources/js/app.js'])
 </body>
 </html>

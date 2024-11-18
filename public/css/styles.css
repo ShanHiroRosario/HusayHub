@@ -2,9 +2,9 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #f0f0f0; /* Default background color */
-    background-image: url("/images/signup-bg.png"); /* Path to your background image */
     background-size: 1920px 1040px; /* Make the image cover the entire body */
     background-position: center; /* Center the image */
+    background-image: url("/images/signup-bg.png"); /* Path to the JRU background image */
     background-repeat: no-repeat; /* Prevent image repetition */
     margin: 0;
     padding: 0;
@@ -66,11 +66,26 @@ form {
     gap: 1px; /* Add space between form elements */
 }
 
+.input-container {
+    position: relative;
+    margin: 10px 0;
+}
 /* Style for form labels */
 label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    font-size: 16px;
+    color: #aaa;
+}
+
+input:focus + label,
+input:not(:placeholder-shown) + label {
+    top: -18px;
+    font-size: 12px;
+    color: #333;
 }
 
 /* Input field styles */
@@ -161,4 +176,27 @@ a:hover {
     border-radius: 4px; /* Rounded corners */
     border: 1px solid #ccc; /* Border style */
     box-sizing: border-box; /* Ensure padding is included in width/height */
+}
+
+/* Grayed out example format */
+.format-hint {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    font-size: 16px;
+    color: #aaa;
+    pointer-events: none; /* Prevent it from blocking input */
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.2s ease; /* Smooth transition */
+}
+
+/* Show the format hint when input is focused and is empty */
+input:focus + label + .format-hint,
+input:not(:focus):empty + label + .format-hint {
+    opacity: 1; /* Make the format hint visible when input is empty */
+}
+
+/* Hide the format hint when there is input in the field */
+input:not(:empty) + label + .format-hint {
+    opacity: 0; /* Hide the format hint when input has value */
 }
