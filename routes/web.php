@@ -3,17 +3,14 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 
-Route::get('/', function () {
-    return view('home');
-});
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
-
+// Show signup form (GET request)
 Route::get('/signup', [AuthController::class, 'showSignupForm'])->name('signup.form');
+
+// Handle signup (POST request)
 Route::post('/signup', [AuthController::class, 'handleSignup'])->name('signup.submit');
 
+// Show login form (GET request)
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login.form');
-Route::post('/login', [AuthController::class, 'handleLogin'])->name('login.submit');
+
+// Handle login (POST request)
+Route::post('/login', [AuthController::class, 'login'])->name('login.submit');

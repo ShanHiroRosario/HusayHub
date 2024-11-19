@@ -4,83 +4,73 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth; // Missing import for Auth
 use App\Models\User;
 
 class AuthController extends Controller
 {
+    // Show signup form
     public function showSignupForm()
     {
-        return view('signup');
+        return view('signup'); // Ensure you have the signup view
     }
 
+    // Handle signup
     public function handleSignup(Request $request)
-{
-    // Validate the input fields
-    $request->validate([
-        'id' => ['required', 'regex:/^\d{2}-\d{6}$/'], // Matches format 00-000000
-        'email' => ['required', 'email'],
-        'password' => ['required', 'min:8', 'confirmed'], // Confirmed matches "confirm_password"
-        'verification_code' => ['nullable', 'digits:6'], // Validation for code during final submission
-    ]);
-
-    // Generate a verification code
-    if (!$request->has('verification_code')) {
-        $verificationCode = random_int(100000, 999999);
-
-        // Simulate email sending
-        Mail::raw("Your verification code is: $verificationCode", function ($message) use ($request) {
-            $message->to($request->email)
-                    ->subject('Verification Code');
-        });
-
-        // Store verification code in session for validation
-        session(['verification_code' => $verificationCode]);
-
-        return back()->with('status', 'Verification code sent to your email.');
-    }
-
-    // Check verification code validity
-    $isCodeValid = $request->verification_code == session('verification_code'); // Compare with session-stored code
-    if (!$isCodeValid) {
-        return back()->withErrors(['verification_code' => 'Invalid verification code.']);
-    }
-
-    // Create a new user record in the database
-    User::create([
-        'id' => $request->id, // Store the user ID
-        'email' => $request->email, // Store the email
-        'password' => Hash::make($request->password), // Hash the password for security
-    ]);
-
-    // Clear session-stored verification code
-    session()->forget('verification_code');
-
-    // Redirect the user with a success message
-    return redirect('/')->with('success', 'Signup successful! You can now log in.');
-}
-
-    public function showLoginForm()
-    {
-        return view('login');
-    }
-
-    public function handleLogin(Request $request)
     {
         $request->validate([
+            'jru_id' => ['required', 'regex:/^\d{2}-\d{6}$/', 'unique:users,jru_id'], // Ensure unique JRU ID
+            'email' => ['required', 'email', 'unique:users,email'], // Ensure unique email
+            'password' => ['required', 'min:8', 'confirmed'], // Password confirmation check
+        ]);
+
+        // Create new user
+        User::create([
+            'jru_id' => $request->jru_id,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        // Redirect to login form after signup
+        return redirect()->route('login.form')->with('success', 'Signup successful! Please log in.');
+    }
+
+    // Show login form
+    public function showLoginForm()
+    {
+        return view('login'); // Ensure you have the login view
+    }
+
+    // Handle login
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
 
-        // Use Laravel's built-in authentication
-        if (auth()->attempt($request->only('email', 'password'))) {
-            return redirect('/')->with('success', 'Login successful!');
+       
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->route('login.form')->with('success', 'Credentials correct');
+            //return redirect()->intended('dashboard'); // Redirect to dashboard or intended page
         }
+      
 
-        return back()->withErrors(['email' => 'Invalid credentials']);
+        
+        return back()->withErrors([
+            'email' => 'The provided credentials are incorrect.',
+        ]);
     }
 
+    // Handle logout (optional)
+    public function logout(Request $request)
+    {
+        Auth::logout();
 
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
+        return redirect()->route('login.form');
+    }
 }
-

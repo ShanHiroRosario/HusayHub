@@ -81,6 +81,7 @@ label {
     color: #aaa;
 }
 
+/* Adjust for input focus and non-placeholder state */
 input:focus + label,
 input:not(:placeholder-shown) + label {
     top: -18px;
@@ -103,9 +104,8 @@ input[type="number"],
     box-sizing: border-box; /* Ensure padding is included in width */
 }
 
-/* Button styles */
 button {
-    width: 100%; /* Make the button fill the form width */
+    width: 100%;
     padding: 10px;
     background: #007bff;
     color: #fff;
@@ -114,6 +114,7 @@ button {
     font-size: 16px;
     cursor: pointer;
     text-align: center;
+    box-sizing: border-box; /* Ensures padding doesn’t affect width */
 }
 
 /* Button hover effect */
@@ -128,6 +129,13 @@ button:hover {
     padding: 10px;
     border-radius: 4px;
     margin-bottom: 16px;
+}
+
+small.error {
+    color: #d9534f; /* Match error-box text color */
+    font-size: 12px;
+    margin-top: 4px;
+    display: block; /* Ensures it doesn’t sit inline with the input */
 }
 
 /* Link styles */
@@ -178,25 +186,69 @@ a:hover {
     box-sizing: border-box; /* Ensure padding is included in width/height */
 }
 
-/* Grayed out example format */
+/* Format Hint Styling */
 .format-hint {
     position: absolute;
     top: 12px;
     left: 12px;
     font-size: 16px;
     color: #aaa;
-    pointer-events: none; /* Prevent it from blocking input */
+    pointer-events: none; /* Prevent interaction with hint */
     opacity: 0; /* Initially hidden */
     transition: opacity 0.2s ease; /* Smooth transition */
 }
 
-/* Show the format hint when input is focused and is empty */
-input:focus + label + .format-hint,
-input:not(:focus):empty + label + .format-hint {
-    opacity: 1; /* Make the format hint visible when input is empty */
+/* Show hint when input is focused and empty */
+input:focus ~ .format-hint {
+    opacity: 1;
 }
 
-/* Hide the format hint when there is input in the field */
-input:not(:empty) + label + .format-hint {
-    opacity: 0; /* Hide the format hint when input has value */
+/* Ensure hint hides when input is not empty */
+input:not(:placeholder-shown) ~ .format-hint {
+    opacity: 0;
+}
+
+/* Default styling for the eye icon */
+.toggle-password {
+    position: absolute;
+    top: 43%;
+    right: 10px;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px; /* Adjust size for better visibility */
+    color: #aaa; /* Default gray color */
+    transition: color 0.3s ease, transform 0.3s ease; /* Smooth transition for color and transform */
+}
+
+/* Hover effect for the toggle icon */
+.toggle-password:hover {
+    color: #007bff; /* Change color on hover */
+    transform: translateY(-50%) scale(1.2); /* Slightly increase icon size on hover */
+}
+
+/* Ensure the icon is displayed properly when the input is focused or has value */
+input:focus ~ .toggle-password,
+input:not(:placeholder-shown) ~ .toggle-password {
+    display: inline; /* Ensure icon is visible */
+}
+
+@media (max-width: 400px) {
+    form {
+        width: 90%; /* Shrink form width to fit smaller screens */
+        padding: 15px;
+    }
+
+    .navbar {
+        padding: 8px 10px; /* Adjust navbar padding for smaller viewports */
+    }
+
+    .logo {
+        height: 180px; /* Scale down logo on small screens */
+        margin-top: 10px;
+    }
+    .toggle-password {
+        font-size: 16px; /* Scale down icon for smaller screens */
+    }
 }
