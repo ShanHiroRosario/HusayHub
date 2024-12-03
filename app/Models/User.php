@@ -51,4 +51,16 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user) {
+            if (empty($user->display_name)) {
+                $user->display_name = $user->jru_id; // Default display_name to jru_id
+            }
+        });
+    }
+
+
 }

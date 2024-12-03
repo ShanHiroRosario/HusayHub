@@ -21,10 +21,11 @@ Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
 // Logout route
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Show the dashboard (which now calls the controller with $user passed in)
-Route::get('/dashboard', [AuthController::class, 'showDashboard'])->middleware('auth')->name('index');
+// Dashboard route (protected with auth middleware)
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('index')->middleware('auth');
 
-// Use PostController for posts
-Route::get('/', [PostController::class, 'index'])->name('home');
+// Make sure this is the correct route for the index page
+Route::get('/index', [PostController::class, 'index'])->name('index')->middleware('auth');
+
 
 Route::post('/posts', [PostController::class, 'store'])->middleware('auth')->name('posts.store');

@@ -42,10 +42,8 @@
                         <img src="./images/profile-1.jpg">
                     </div>
                     <div class="handle">
-                        <h4>{{ $user->jru_id }}</h4>
-                        <p class="text-muted">
-                        {{ $user->display_name }}
-                        </p>
+                        <h4>{{ $user->display_name }}</h4>
+                        <p class="text-muted">{{ $user->email}}</p>
                     </div>
                 </a>
 
@@ -146,370 +144,72 @@
                 <label class="btn btn-primary" for="create-post">Create Post</label>
             </div>
 
-            <div class="middle">
-    <form action="{{ route('posts.store') }}" method="POST" class="create-post">
-        @csrf
-        <div class="profile-photo">
-            <img src="./images/profile-1.jpg" alt="User Photo">
-        </div>
-        <input type="text" name="content" placeholder="What's on your mind?" id="create-post">
-        <input type="submit" value="Post" class="btn btn-primary">
-    </form>
+            <div class="container">
+                <div class="middle">
+                    <!-- Create Post Form -->
+                    <form action="{{ route('posts.store') }}" method="POST" class="create-post">
+                        @csrf
+                        <div class="profile-photo">
+                            <img src="{{ $user->profile_photo ?? asset('images/default-profile.jpg') }}" alt="User Photo">
+                        </div>
+                        <input type="text" name="content" placeholder="What's on your mind?" id="create-post" required>
+                        <input type="submit" value="Post" class="btn btn-primary">
+                    </form>
 
-   <!----------------- FEEDS -------------------->
-   <div class="feeds">
-                    <!----------------- FEED 1 -------------------->
-                    <div class="feed">
-                        <div class="head">
-                            <div class="user">
-                                <div class="profile-photo">
-                                    <img src="./images/profile-13.jpg">
+                    <!-- Feeds -->
+                    <div class="feeds">
+                        <!-- Loop over each post -->
+                        @foreach($posts as $post)
+                            <div class="feed">
+                                <div class="head">
+                                    <div class="user">
+                                        <div class="profile-photo">
+                                            <img src="./images/profile-15.jpg" alt="Profile Photo">
+                                        </div>
+                                        <div class="info">
+                                            <h3>{{ $post->user->display_name }}</h3>
+                                            <small>{{ $post->created_at->diffForHumans() }}</small>
+                                        </div>
+                                    </div>
+                                    <span class="edit">
+                                        <i class="uil uil-ellipsis-h"></i>
+                                    </span>
                                 </div>
-                                <div class="info">
-                                    <h3>12-345678</h3>
-                                    <small>Manila, 15 Minutes Ago</small>
+
+                                <div class="photo">
+                                    <img src="./images/profile-15.jpg" alt="Post Image">
+                                </div>
+
+                                <div class="action-buttons">
+                                    <div class="interaction-buttons">
+                                        <span><i class="uil uil-heart"></i></span>
+                                        <span><i class="uil uil-comment-dots"></i></span>
+                                        <span><i class="uil uil-share-alt"></i></span>
+                                    </div>
+                                    <div class="bookmark">
+                                        <span><i class="uil uil-bookmark-full"></i></span>
+                                    </div>
+                                </div>
+
+                                <div class="liked-by">
+                                    <span><img src="./images/profile-10.jpg"></span>
+                                    <span><img src="./images/profile-4.jpg"></span>
+                                    <span><img src="./images/profile-15.jpg"></span>
+                                    <p>Liked by <b>23-261213</b> and <b>2, 323 others</b></p>
+                                </div>
+
+                                <div class="caption">
+                                    <p><b>{{ $post->user->display_name }}</b> {{ $post->content }}</p>
+                                </div>
+
+                                <div class="comments text-muted">
+                                    View all {{ $post->comments_count }} comments
                                 </div>
                             </div>
-                            <span class="edit">
-                                <i class="uil uil-ellipsis-h"></i>
-                            </span>
-                        </div>
-
-                        <div class="photo">
-                            <img src="./images/feed-1.jpg">
-                        </div>
-
-                        <div class="action-buttons">
-                            <div class="interaction-buttons">
-                                <span><i class="uil uil-heart"></i></span>
-                                <span><i class="uil uil-comment-dots"></i></span>
-                                <span><i class="uil uil-share-alt"></i></span>
-                            </div>
-                            <div class="bookmark">
-                                <span><i class="uil uil-bookmark-full"></i></span>
-                            </div>
-                        </div>
-
-                        <div class="liked-by">
-                            <span><img src="./images/profile-10.jpg"></span>
-                            <span><img src="./images/profile-4.jpg"></span>
-                            <span><img src="./images/profile-15.jpg"></span>
-                            <p>Liked by <b>23-261213</b> and <b>2, 323 others</b></p>
-                        </div>
-
-                        <div class="caption">
-                            <p><b>12-345678</b> Lorem ipsum dolor sit quisquam eius. 
-                            <span class="harsh-tag">#lifestyle</span></p>
-                        </div>
-
-                        <div class="comments text-muted">
-                            View all 277 comments
-                        </div>
+                        @endforeach
                     </div>
-                    <!----------------- END OF FEED 1 -------------------->
-
-                    <!----------------- FEED 2 -------------------->
-                    <div class="feed">
-                        <div class="head">
-                            <div class="user">
-                                <div class="profile-photo">
-                                    <img src="./images/profile-10.jpg">
-                                </div>
-                                <div class="info">
-                                    <h3>Robert Caesar Malabed</h3>
-                                    <small>Pasig, 2 Hours Ago</small>
-                                </div>
-                            </div>
-                            <span class="edit">
-                                <i class="uil uil-ellipsis-h"></i>
-                            </span>
-                        </div>
-
-                        <div class="photo">
-                            <img src="./images/feed-3.jpg">
-                        </div>
-
-                        <div class="action-buttons">
-                            <div class="interaction-buttons">
-                                <span><i class="uil uil-heart"></i></span>
-                                <span><i class="uil uil-comment-dots"></i></span>
-                                <span><i class="uil uil-share-alt"></i></span>
-                            </div>
-                            <div class="bookmark">
-                                <span><i class="uil uil-bookmark-full"></i></span>
-                            </div>
-                        </div>
-
-                        <div class="liked-by">
-                            <span><img src="./images/profile-11.jpg"></span>
-                            <span><img src="./images/profile-5.jpg"></span>
-                            <span><img src="./images/profile-16.jpg"></span>
-                            <p>Liked by <b>12-345678</b> and <b>2, 323 others</b></p>
-                        </div>
-
-                        <div class="caption">
-                            <p><b>Robert Caesar Malabed</b> Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, fugiat? Ipsam voluptatibus beatae facere eos harum voluptas distinctio, officia, facilis sed quisquam esse, assumenda minima ut. Excepturi sit quis reiciendis! 
-                            <span class="harsh-tag">#lifestyle</span></p>
-                        </div>
-
-                        <div class="comments text-muted">
-                            View all 100 comments
-                        </div>
-                    </div>
-                    <!----------------- END OF FEED 2 -------------------->
-
-                    <!----------------- FEED 3 -------------------->
-                    <div class="feed">
-                        <div class="head">
-                            <div class="user">
-                                <div class="profile-photo">
-                                    <img src="./images/profile-4.jpg">
-                                </div>
-                                <div class="info">
-                                    <h3>Chauncey Santos</h3>
-                                    <small>Mandaluyong, 50 Minutes Ago</small>
-                                </div>
-                            </div>
-                            <span class="edit">
-                                <i class="uil uil-ellipsis-h"></i>
-                            </span>
-                        </div>
-
-                        <div class="photo">
-                            <img src="./images/feed-4.jpg">
-                        </div>
-
-                        <div class="action-buttons">
-                            <div class="interaction-buttons">
-                                <span><i class="uil uil-heart"></i></span>
-                                <span><i class="uil uil-comment-dots"></i></span>
-                                <span><i class="uil uil-share-alt"></i></span>
-                            </div>
-                            <div class="bookmark">
-                                <span><i class="uil uil-bookmark-full"></i></span>
-                            </div>
-                        </div>
-
-                        <div class="liked-by">
-                            <span><img src="./images/profile-12.jpg"></span>
-                            <span><img src="./images/profile-13.jpg"></span>
-                            <span><img src="./images/profile-14.jpg"></span>
-                            <p>Liked by <b>Robert Caesar Malabed</b> and <b>2, 323 others</b></p>
-                        </div>
-
-                        <div class="caption">
-                            <p><b>Chauncey Santos</b> Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quo ullam, quam voluptatibus natus ex corporis ea atque quisquam, necessitatibus, cumque eligendi aliquam nulla soluta hic. Obcaecati, tempore dignissimos! Esse cupiditate laborum ullam, quae necessitatibus, officiis, quaerat aspernatur illo voluptatum repellat perferendis voluptatem similique. Assumenda nostrum, eius sit laborum nesciunt deserunt!
-                            <span class="harsh-tag">#lifestyle</span></p>
-                        </div>
-
-                        <div class="comments text-muted">
-                            View all 50 comments
-                        </div>
-                    </div>
-                    <!----------------- END OF FEED 3 -------------------->
-
-                    <!----------------- FEED 4 -------------------->
-                    <div class="feed">
-                        <div class="head">
-                            <div class="user">
-                                <div class="profile-photo">
-                                    <img src="./images/profile-5.jpg">
-                                </div>
-                                <div class="info">
-                                    <h3>Bea Elaine Sapigao</h3>
-                                    <small>Taguig, 1 Hour Ago</small>
-                                </div>
-                            </div>
-                            <span class="edit">
-                                <i class="uil uil-ellipsis-h"></i>
-                            </span>
-                        </div>
-
-                        <div class="photo">
-                            <img src="./images/feed-5.jpg">
-                        </div>
-
-                        <div class="action-buttons">
-                            <div class="interaction-buttons">
-                                <span><i class="uil uil-heart"></i></span>
-                                <span><i class="uil uil-comment-dots"></i></span>
-                                <span><i class="uil uil-share-alt"></i></span>
-                            </div>
-                            <div class="bookmark">
-                                <span><i class="uil uil-bookmark-full"></i></span>
-                            </div>
-                        </div>
-
-                        <div class="liked-by">
-                            <span><img src="./images/profile-10.jpg"></span>
-                            <span><img src="./images/profile-4.jpg"></span>
-                            <span><img src="./images/profile-15.jpg"></span>
-                            <p>Liked by <b>Chauncey Santos</b> and <b>5, 323 others</b></p>
-                        </div>
-
-                        <div class="caption">
-                            <p><b>Bea Elaine Sapigao</b> Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi architecto sunt itaque, in, enim non doloremque velit unde nihil vitae impedit dolorum, distinctio ab deleniti! 
-                            <span class="harsh-tag">#lifestyle</span></p>
-                        </div>
-
-                        <div class="comments text-muted">
-                            View all 540 comments
-                        </div>
-                    </div>
-                    <!----------------- END OF FEED 4 -------------------->
-
-                    <!----------------- FEED 5 -------------------->
-                    <div class="feed">
-                        <div class="head">
-                            <div class="user">
-                                <div class="profile-photo">
-                                    <img src="./images/profile-7.jpg">
-                                </div>
-                                <div class="info">
-                                    <h3>22-278902</h3>
-                                    <small>Taguig, 3 Hours Ago</small>
-                                </div>
-                            </div>
-                            <span class="edit">
-                                <i class="uil uil-ellipsis-h"></i>
-                            </span>
-                        </div>
-
-                        <div class="photo">
-                            <img src="./images/feed-7.jpg">
-                        </div>
-
-                        <div class="action-buttons">
-                            <div class="interaction-buttons">
-                                <span><i class="uil uil-heart"></i></span>
-                                <span><i class="uil uil-comment-dots"></i></span>
-                                <span><i class="uil uil-share-alt"></i></span>
-                            </div>
-                            <div class="bookmark">
-                                <span><i class="uil uil-bookmark-full"></i></span>
-                            </div>
-                        </div>
-
-                        <div class="liked-by">
-                            <span><img src="./images/profile-10.jpg"></span>
-                            <span><img src="./images/profile-4.jpg"></span>
-                            <span><img src="./images/profile-15.jpg"></span>
-                            <p>Liked by <b>23-261213</b> and <b>1, 226 others</b></p>
-                        </div>
-
-                        <div class="caption">
-                            <p><b>22-278902</b> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Autem obcaecati nisi veritatis quisquam eius accusantium rem quo repellat facilis neque.
-                            <span class="harsh-tag">#lifestyle</span></p>
-                        </div>
-
-                        <div class="comments text-muted">
-                            View all 199 comments
-                        </div>
-                    </div>
-                    <!----------------- END OF FEED 5 -------------------->
-
-                    <!----------------- FEED 6 -------------------->
-                    <div class="feed">
-                        <div class="head">
-                            <div class="user">
-                                <div class="profile-photo">
-                                    <img src="./images/profile-15.jpg">
-                                </div>
-                                <div class="info">
-                                    <h3>21-261213</h3>
-                                    <small>Manila, 5 Hours Ago</small>
-                                </div>
-                            </div>
-                            <span class="edit">
-                                <i class="uil uil-ellipsis-h"></i>
-                            </span>
-                        </div>
-
-                        <div class="photo">
-                            <img src="./images/feed-2.jpg">
-                        </div>
-
-                        <div class="action-buttons">
-                            <div class="interaction-buttons">
-                                <span><i class="uil uil-heart"></i></span>
-                                <span><i class="uil uil-comment-dots"></i></span>
-                                <span><i class="uil uil-share-alt"></i></span>
-                            </div>
-                            <div class="bookmark">
-                                <span><i class="uil uil-bookmark-full"></i></span>
-                            </div>
-                        </div>
-
-                        <div class="liked-by">
-                            <span><img src="./images/profile-10.jpg"></span>
-                            <span><img src="./images/profile-4.jpg"></span>
-                            <span><img src="./images/profile-15.jpg"></span>
-                            <p>Liked by <b>22-278902</b> and <b>2, 323 others</b></p>
-                        </div>
-
-                        <div class="caption">
-                            <p><b>21-261213</b> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum, consequuntur!
-                            <span class="harsh-tag">#lifestyle</span></p>
-                        </div>
-
-                        <div class="comments text-muted">
-                            View all 277 comments
-                        </div>
-                    </div>
-                    <!----------------- END OF FEED 6 -------------------->
-
-                    <!----------------- FEED 7 -------------------->
-                    <div class="feed">
-                        <div class="head">
-                            <div class="user">
-                                <div class="profile-photo">
-                                    <img src="./images/profile-3.jpg">
-                                </div>
-                                <div class="info">
-                                    <h3>Christoper Yap</h3>
-                                    <small>Pasig, 8 Hours Ago</small>
-                                </div>
-                            </div>
-                            <span class="edit">
-                                <i class="uil uil-ellipsis-h"></i>
-                            </span>
-                        </div>
-
-                        <div class="photo">
-                            <img src="./images/feed-6.jpg">
-                        </div>
-
-                        <div class="action-buttons">
-                            <div class="interaction-buttons">
-                                <span><i class="uil uil-heart"></i></span>
-                                <span><i class="uil uil-comment-dots"></i></span>
-                                <span><i class="uil uil-share-alt"></i></span>
-                            </div>
-                            <div class="bookmark">
-                                <span><i class="uil uil-bookmark-full"></i></span>
-                            </div>
-                        </div>
-
-                        <div class="liked-by">
-                            <span><img src="./images/profile-10.jpg"></span>
-                            <span><img src="./images/profile-4.jpg"></span>
-                            <span><img src="./images/profile-15.jpg"></span>
-                            <p>Liked by <b>23-261213</b> and <b>2, 323 others</b></p>
-                        </div>
-
-                        <div class="caption">
-                            <p><b>Christoper Yap</b> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consequuntur itaque quasi autem pariatur ducimus eligendi, qui odio molestias at molestiae. 
-                            <span class="harsh-tag">#lifestyle</span></p>
-                        </div>
-
-                        <div class="comments text-muted">
-                            View all 277 comments
-                        </div>
-                    </div>
-                    <!----------------- END OF FEED 7 -------------------->
                 </div>
-                <!----------------- END OF FEEDS -------------------->
-            </div>
+
              <!----------------- END OF MIDDLE -------------------->
 
             <!----------------- RIGHT -------------------->

@@ -10,10 +10,17 @@ class PostController extends Controller
 {
     // Show all posts (for the feed)
     public function index()
-    {
-        $posts = Post::latest()->get(); // Fetch all posts, sorted by the latest first
-        return view('index', compact('posts'));
-    }
+{
+    // Get the authenticated user
+    $user = Auth::user();
+
+    // Retrieve all posts, you can also paginate them if needed
+    $posts = Post::with('user')->latest()->get(); // Assuming Post has a 'user' relationship
+
+    // Pass the user and posts to the view
+    return view('index', compact('user', 'posts'));
+}
+
 
     // Store a new post
     public function store(Request $request)

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth; // Missing import for Auth
+use Illuminate\Support\Facades\Auth; // Ensure proper import for Auth
 use App\Models\User;
 
 class AuthController extends Controller
@@ -49,40 +49,26 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-       
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials, $request->filled('remember'))) {
             $request->session()->regenerate();
-            return redirect()->route('index'); // Redirect to the dashboard
+            // Redirect to the intended page or to 'index' if no previous page was requested
+            return redirect()->intended(route('index'));
         }
-        
-      
 
-        
         return back()->withErrors([
             'email' => 'The provided credentials are incorrect.',
         ]);
     }
 
-
-    public function showDashboard()
-{
-    // Get the authenticated user
-    $user = Auth::user();
-
-    // Pass the user data to the view (index view)
-    return view('index', compact('user'));
-}
-
-
     // Handle logout (optional)
     public function logout(Request $request)
-{
-    Auth::logout();
+    {
+        Auth::logout();
 
-    $request->session()->invalidate();
-    $request->session()->regenerateToken();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
-    return redirect()->route('login.form')->with('success', 'Logged out successfully');
-}
-
+        // Redirect to login page after logging out
+        return redirect()->route('login.form')->with('success', 'Logged out successfully');
+    }
 }
