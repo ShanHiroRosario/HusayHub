@@ -60,13 +60,6 @@
 
     @vite(['resources/js/togglePassword.js', 'resources/js/app.js'])
 
-    <script>
-        // Check if there's a success message in the session
-        @if (session('success'))
-            // If success message exists, show the popup
-            alert('{{ session('success') }}');
-        @endif
-    </script>
 
 </body>
 </html>

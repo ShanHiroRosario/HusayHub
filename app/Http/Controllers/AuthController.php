@@ -52,9 +52,9 @@ class AuthController extends Controller
        
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->route('login.form')->with('success', 'Credentials correct');
-            //return redirect()->intended('dashboard'); // Redirect to dashboard or intended page
+            return redirect()->route('index'); // Redirect to the dashboard
         }
+        
       
 
         
@@ -63,14 +63,26 @@ class AuthController extends Controller
         ]);
     }
 
+
+    public function showDashboard()
+{
+    // Get the authenticated user
+    $user = Auth::user();
+
+    // Pass the user data to the view (index view)
+    return view('index', compact('user'));
+}
+
+
     // Handle logout (optional)
     public function logout(Request $request)
-    {
-        Auth::logout();
+{
+    Auth::logout();
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
 
-        return redirect()->route('login.form');
-    }
+    return redirect()->route('login.form')->with('success', 'Logged out successfully');
+}
+
 }
