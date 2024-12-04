@@ -24,7 +24,6 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // Dashboard route (protected with auth middleware)
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('index')->middleware('auth');
 
-// Make sure this is the correct route for the index page
 Route::get('/index', [PostController::class, 'index'])->name('index')->middleware('auth');
 
 

@@ -207,3 +207,68 @@ Bg3.addEventListener("click", () => {
     Bg2.classList.remove("active");
     changeBG();
 });
+// JavaScript to show/hide the delete button and image preview
+document.addEventListener("DOMContentLoaded", () => {
+    const uploadButton = document.getElementById("image-upload-btn");
+    const fileInput = document.getElementById("image-upload");
+    const imagePreviewContainer = document.getElementById("image-preview");
+    const previewImage = document.getElementById("preview-img");
+    const deleteButton = document.getElementById("delete-image-btn");
+    const popup = document.getElementById("image-popup");
+    const popupImage = document.getElementById("popup-image");
+    const closePopup = document.getElementById("close-popup");
+
+    let uploadedImageUrl = "";
+
+    // Open file selector
+    uploadButton.addEventListener("click", () => {
+        fileInput.click();
+    });
+
+    // Preview image in the preview container
+    fileInput.addEventListener("change", (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                uploadedImageUrl = e.target.result;
+                previewImage.src = uploadedImageUrl;
+
+                // Show image preview and delete button
+                imagePreviewContainer.style.display = "flex";
+                deleteButton.style.visibility = "visible"; // Show delete button
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Open enlarged image in popup when the preview image is clicked
+    previewImage.addEventListener("click", () => {
+        if (uploadedImageUrl) {
+            popup.style.display = "flex";
+            popupImage.src = uploadedImageUrl;
+        }
+    });
+
+    // Close popup when 'X' is clicked
+    closePopup.addEventListener("click", () => {
+        popup.style.display = "none";
+    });
+
+    // Close popup when clicking outside the image
+    popup.addEventListener("click", (e) => {
+        if (e.target === popup) {
+            popup.style.display = "none";
+        }
+    });
+
+    // Delete the uploaded image
+    deleteButton.addEventListener("click", () => {
+        uploadedImageUrl = "";
+        fileInput.value = "";
+        previewImage.src = "";
+        imagePreviewContainer.style.display = "none";
+        deleteButton.style.visibility = "hidden"; // Hide delete button
+        popup.style.display = "none"; // Close the popup
+    });
+});

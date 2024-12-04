@@ -28,16 +28,25 @@ class PostController extends Controller
         // Validate incoming request
         $request->validate([
             'content' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate image
         ]);
-
-        // Create a new post, using the authenticated user's ID
+    
+        // Handle file upload
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('images', 'public'); // Save in the 'storage/app/public/images' folder
+        }
+    
+        // Create a new post
         Post::create([
-            'user_id' => Auth::id(),  // Ensure the user is authenticated
+            'user_id' => Auth::id(),
             'content' => $request->content,
+            'image_path' => $imagePath, // Save the image path
         ]);
-
-        // Redirect back to the previous page after posting
-        return redirect()->route('index'); // Or redirect to the homepage or feed
+    
+        // Redirect back
+        return redirect()->route('index');
     }
+    
 }
 

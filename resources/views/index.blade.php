@@ -147,16 +147,51 @@
             <div class="container">
                 <div class="middle">
                     <!-- Create Post Form -->
-                    <form action="{{ route('posts.store') }}" method="POST" class="create-post">
+                    <form action="{{ route('posts.store') }}" method="POST" class="create-post" enctype="multipart/form-data">
                         @csrf
                         <div class="profile-photo">
                             <img src="{{ $user->profile_photo ?? asset('images/default-profile.jpg') }}" alt="User Photo">
                         </div>
+
+                        <!-- Text input -->
                         <input type="text" name="content" placeholder="What's on your mind?" id="create-post" required>
+
+                        <!-- Container for Image Preview and Upload Button -->
+                        <div class="upload-container">
+                            <!-- Image Preview (Visible only if an image is selected) -->
+                            <div id="image-preview" style="display: none; flex: 1; margin-right: 10px; position: relative;">
+                                <img id="preview-img" src="" alt="Image Preview" style="max-width: 100px; max-height: 100px;">
+                                <!-- Close button on preview (for closing the preview image) -->
+
+                            </div>
+
+                            <!-- Upload Image Button -->
+                            <button type="button" id="image-upload-btn" class="btn-upload">
+                                <i class="uil uil-image"></i>
+                            </button>
+                        </div>
+
+                        <!-- Hidden file input -->
+                        <input type="file" name="image" id="image-upload" accept="image/*" style="display: none;">
+
+                        <!-- Submit Button -->
                         <input type="submit" value="Post" class="btn btn-primary">
                     </form>
 
-                    <!-- Feeds -->
+                    <!-- Modal for enlarged image -->
+                    <div class="image-popup" id="image-popup">
+                        <div class="popup-content">
+                            <div class="popup-controls">
+                                <button id="delete-image-btn" class="popup-delete-btn">Delete Image</button>
+                                <button id="close-popup" class="close-popup">&times;</button>
+                            </div>
+                            <img id="popup-image" src="" alt="Enlarged Image">
+                        </div>
+                    </div>
+
+                    
+                     <!-- Feeds -->
+ 
                     <div class="feeds">
                         <!-- Loop over each post -->
                         @foreach($posts as $post)
@@ -164,7 +199,7 @@
                                 <div class="head">
                                     <div class="user">
                                         <div class="profile-photo">
-                                            <img src="./images/profile-15.jpg" alt="Profile Photo">
+                                            <img src="{{ $post->user->profile_photo ?? asset('images/default-profile.jpg') }}" alt="Profile Photo">
                                         </div>
                                         <div class="info">
                                             <h3>{{ $post->user->display_name }}</h3>
@@ -176,8 +211,11 @@
                                     </span>
                                 </div>
 
+                                <!-- Display the post image if it exists -->
                                 <div class="photo">
-                                    <img src="./images/profile-15.jpg" alt="Post Image">
+                                    @if ($post->image_path)
+                                        <img src="{{ asset('storage/' . $post->image_path) }}" alt="Post Image">
+                                    @endif
                                 </div>
 
                                 <div class="action-buttons">
@@ -195,7 +233,7 @@
                                     <span><img src="./images/profile-10.jpg"></span>
                                     <span><img src="./images/profile-4.jpg"></span>
                                     <span><img src="./images/profile-15.jpg"></span>
-                                    <p>Liked by <b>23-261213</b> and <b>2, 323 others</b></p>
+                                    <p>Liked by <b>23-261213</b> and <b>2,323 others</b></p>
                                 </div>
 
                                 <div class="caption">
@@ -203,11 +241,12 @@
                                 </div>
 
                                 <div class="comments text-muted">
-                                    View all {{ $post->comments_count }} comments
+                                    View all {{ $post->comments_count ?? 0 }} comments
                                 </div>
                             </div>
                         @endforeach
                     </div>
+
                 </div>
 
              <!----------------- END OF MIDDLE -------------------->
