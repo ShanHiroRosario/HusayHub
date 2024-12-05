@@ -141,7 +141,12 @@
                     </a>
                 </div>
                 <!----------------- END OF SIDEBAR -------------------->
-                <label class="btn btn-primary" for="create-post">Create Post</label>
+                <form action="{{ route('logout') }}" method="POST" style="display: none;" id="logout-form">
+                        @csrf
+                    </form>
+                    <label class="btn btn-primary" for="logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        Logout
+                    </label>
             </div>
 
             <div class="container">
