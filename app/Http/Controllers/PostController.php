@@ -14,8 +14,8 @@ class PostController extends Controller
     // Get the authenticated user
     $user = Auth::user();
 
-    // Retrieve all posts, you can also paginate them if needed
-    $posts = Post::with('user')->latest()->get(); // Assuming Post has a 'user' relationship
+    // Retrieve all posts
+    $posts = Post::with('user')->latest()->get(); 
 
     // Pass the user and posts to the view
     return view('index', compact('user', 'posts'));

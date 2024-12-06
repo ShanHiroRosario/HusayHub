@@ -42,49 +42,49 @@
 
 
     <form method="POST" action="{{ route('signup.submit') }}">
-    @csrf
+        @csrf
 
-    <h3 class="normal">Create your <span class="husayhub">HusayHub</span> Account</h3>
+        <h3 class="normal">Create your <span class="husayhub">HusayHub</span> Account</h3>
 
-    <div class="input-container">
-        <input type="text" name="jru_id" id="jru_id" placeholder=" " required pattern="^\d{2}-\d{6}$" title="Please enter ID in the format: 00-000000">
-        <label for="jru_id">Enter JRU ID</label>
-        <span class="format-hint">00-000000</span>
-        @error('jru_id')
+        <div class="input-container">
+            <input type="text" name="jru_id" id="jru_id" placeholder=" " required pattern="^\d{2}-\d{6}$" title="Please enter ID in the format: 00-000000">
+            <label for="jru_id">Enter JRU ID</label>
+            <span class="format-hint">00-000000</span>
+            @error('jru_id')
+                <small class="error">{{ $message }}</small>
+            @enderror
+        </div>
+
+        <div class="input-container">
+            <input type="email" name="email" id="email" placeholder=" " required>
+            <label for="email">Enter Email</label>
+            @error('email')
+                <small class="error">{{ $message }}</small>
+            @enderror
+        </div>
+
+        <div class="input-container">
+        <input type="password" name="password" id="password" placeholder=" " required>
+        <label for="password">Enter Password</label>
+        <span class="toggle-password" data-target="password">
+            <i class="fa fa-eye-slash"></i> <!-- Default to eye icon -->
+        </span>
+        @error('password')
             <small class="error">{{ $message }}</small>
         @enderror
-    </div>
+        </div>
 
-    <div class="input-container">
-        <input type="email" name="email" id="email" placeholder=" " required>
-        <label for="email">Enter Email</label>
-        @error('email')
-            <small class="error">{{ $message }}</small>
-        @enderror
-    </div>
-
-    <div class="input-container">
-    <input type="password" name="password" id="password" placeholder=" " required>
-    <label for="password">Enter Password</label>
-    <span class="toggle-password" data-target="password">
-        <i class="fa fa-eye-slash"></i> <!-- Default to eye icon -->
-    </span>
-    @error('password')
-        <small class="error">{{ $message }}</small>
-    @enderror
-</div>
-
-<div class="input-container">
-    <input type="password" name="password_confirmation" id="confirm_password" placeholder=" " required>
-    <label for="confirm_password">Confirm Password</label>
-    <span class="toggle-password" data-target="confirm_password">
-        <i class="fa fa-eye-slash"></i> <!-- Default to eye icon -->
-    </span>
-</div>
+        <div class="input-container">
+            <input type="password" name="password_confirmation" id="confirm_password" placeholder=" " required>
+            <label for="confirm_password">Confirm Password</label>
+            <span class="toggle-password" data-target="confirm_password">
+                <i class="fa fa-eye-slash"></i> <!-- Default to eye icon -->
+            </span>
+        </div>
 
 
-    <button type="submit" aria-label="Sign Up for an account">Sign Up</button>
-</form>
+        <button type="submit" aria-label="Sign Up for an account">Sign Up</button>
+    </form>
 
 @vite(['resources/js/togglePassword.js'])
 

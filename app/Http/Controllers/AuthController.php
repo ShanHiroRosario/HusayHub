@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth; // Ensure proper import for Auth
+use Illuminate\Support\Facades\Auth; 
 use App\Models\User;
 
 class AuthController extends Controller
@@ -12,7 +12,7 @@ class AuthController extends Controller
     // Show signup form
     public function showSignupForm()
     {
-        return view('signup'); // Ensure you have the signup view
+        return view('signup'); 
     }
 
     // Handle signup
@@ -38,7 +38,7 @@ class AuthController extends Controller
     // Show login form
     public function showLoginForm()
     {
-        return view('login'); // Ensure you have the login view
+        return view('login'); 
     }
 
     // Handle login
@@ -60,7 +60,7 @@ class AuthController extends Controller
         ]);
     }
 
-    // Handle logout (optional)
+    // Handle logout 
     public function logout(Request $request)
     {
         Auth::logout();

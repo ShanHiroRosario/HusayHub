@@ -140,14 +140,18 @@
                         <h3>Setting</h3>
                     </a>
                 </div>
-                <!----------------- END OF SIDEBAR -------------------->
+
                 <form action="{{ route('logout') }}" method="POST" style="display: none;" id="logout-form">
                         @csrf
                     </form>
-                    <label class="btn btn-primary" for="logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <label
+                     class="btn btn-primary"
+                     for="logout"
+                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         Logout
                     </label>
             </div>
+            <!----------------- END OF SIDEBAR -------------------->
 
             <!------------ MIDDLE ------------>
             <div class="container">
@@ -201,82 +205,82 @@
                     <div class="feeds">
                         <!-- Loop over each post -->
                         @foreach($posts as $post)
-        <div class="feed">
-            <div class="head">
-                <div class="user">
-                    <div class="profile-photo">
-                        <img src="{{ $post->user->profile_photo ?? asset('images/default-profile.jpg') }}" alt="Profile Photo">
-                    </div>
-                    <div class="info">
-                        <h3>{{ $post->user->display_name }}</h3>
-                        <small>{{ $post->created_at->diffForHumans() }}</small>
-                    </div>
-                </div>
-                <span class="edit">
-                    <i class="uil uil-ellipsis-h"></i>
-                </span>
-            </div>
+                            <div class="feed">
+                                <div class="head">
+                                    <div class="user">
+                                        <div class="profile-photo">
+                                            <img src="{{ $post->user->profile_photo ?? asset('images/default-profile.jpg') }}" alt="Profile Photo">
+                                        </div>
+                                        <div class="info">
+                                            <h3>{{ $post->user->display_name }}</h3>
+                                            <small>{{ $post->created_at->diffForHumans() }}</small>
+                                        </div>
+                                    </div>
+                                    <span class="edit">
+                                        <i class="uil uil-ellipsis-h"></i>
+                                    </span>
+                                </div>
 
-            <!-- Check if the post has an image -->
-            @if ($post->image_path)
-                <!-- Image comes first -->
-                <div class="photo">
-                    <img src="{{ asset('storage/' . $post->image_path) }}" alt="Post Image">
-                </div>
+                                <!-- Check if the post has an image -->
+                                @if ($post->image_path)
+                                    <!-- Image comes first -->
+                                    <div class="photo">
+                                        <img src="{{ asset('storage/' . $post->image_path) }}" alt="Post Image">
+                                    </div>
 
-                <div class="action-buttons">
-                    <div class="interaction-buttons">
-                        <span><i class="uil uil-heart"></i></span>
-                        <span><i class="uil uil-comment-dots"></i></span>
-                        <span><i class="uil uil-share-alt"></i></span>
-                    </div>
-                    <div class="bookmark">
-                        <span><i class="uil uil-bookmark-full"></i></span>
-                    </div>
-                </div>
+                                    <div class="action-buttons">
+                                        <div class="interaction-buttons">
+                                            <span><i class="uil uil-heart"></i></span>
+                                            <span><i class="uil uil-comment-dots"></i></span>
+                                            <span><i class="uil uil-share-alt"></i></span>
+                                        </div>
+                                        <div class="bookmark">
+                                            <span><i class="uil uil-bookmark-full"></i></span>
+                                        </div>
+                                    </div>
 
-                <div class="liked-by">
-                    <span><img src="./images/profile-10.jpg"></span>
-                    <span><img src="./images/profile-4.jpg"></span>
-                    <span><img src="./images/profile-15.jpg"></span>
-                    <p>Liked by <b>23-261213</b> and <b>2,323 others</b></p>
-                </div>
+                                    <div class="liked-by">
+                                        <span><img src="./images/profile-10.jpg"></span>
+                                        <span><img src="./images/profile-4.jpg"></span>
+                                        <span><img src="./images/profile-15.jpg"></span>
+                                        <p>Liked by <b>23-261213</b> and <b>2,323 others</b></p>
+                                    </div>
 
-                <div class="caption">
-                    <p><b>{{ $post->user->display_name }}</b> {{ $post->content }}</p>
-                </div>
-                
-            @else
-                <!-- Caption comes first -->
-                <div class="caption caption-with-space">
-                    <p>{{ $post->content }}</p>
-                </div>
+                                    <div class="caption">
+                                        <p><b>{{ $post->user->display_name }}</b> {{ $post->content }}</p>
+                                    </div>
+                                    
+                                @else
+                                    <!-- Caption comes first -->
+                                    <div class="caption caption-with-space">
+                                        <p>{{ $post->content }}</p>
+                                    </div>
 
-                <div class="action-buttons">
-                <div class="interaction-buttons">
-                    <span><i class="uil uil-heart"></i></span>
-                    <span><i class="uil uil-comment-dots"></i></span>
-                    <span><i class="uil uil-share-alt"></i></span>
-                </div>
-                <div class="bookmark">
-                    <span><i class="uil uil-bookmark-full"></i></span>
-                </div>
-            </div>
+                                    <div class="action-buttons">
+                                    <div class="interaction-buttons">
+                                        <span><i class="uil uil-heart"></i></span>
+                                        <span><i class="uil uil-comment-dots"></i></span>
+                                        <span><i class="uil uil-share-alt"></i></span>
+                                    </div>
+                                    <div class="bookmark">
+                                        <span><i class="uil uil-bookmark-full"></i></span>
+                                    </div>
+                                </div>
 
-                <div class="liked-by">
-                    <span><img src="./images/profile-10.jpg"></span>
-                    <span><img src="./images/profile-4.jpg"></span>
-                    <span><img src="./images/profile-15.jpg"></span>
-                    <p>Liked by <b>23-261213</b> and <b>2,323 others</b></p>
-                </div>
-            @endif
+                                    <div class="liked-by">
+                                        <span><img src="./images/profile-10.jpg"></span>
+                                        <span><img src="./images/profile-4.jpg"></span>
+                                        <span><img src="./images/profile-15.jpg"></span>
+                                        <p>Liked by <b>23-261213</b> and <b>2,323 others</b></p>
+                                    </div>
+                                @endif
 
 
-            <div class="comments text-muted">
-                View all {{ $post->comments_count ?? 0 }} comments
-            </div>
-        </div>
-    @endforeach
+                                <div class="comments text-muted">
+                                    View all {{ $post->comments_count ?? 0 }} comments
+                                </div>
+                            </div>
+                        @endforeach
 
                     </div>
 
