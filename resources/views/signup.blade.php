@@ -86,7 +86,7 @@
     <button type="submit" aria-label="Sign Up for an account">Sign Up</button>
 </form>
 
-    @vite(['resources/js/togglePassword.js'])
-    @vite(['resources/js/app.js'])
+@vite(['resources/js/togglePassword.js'])
+
 </body>
 </html>

@@ -1,3 +1,8 @@
+console.log("togglePassword.js is loaded");
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("DOM fully loaded and parsed");
+    initializePasswordToggles();
+});
 // Function to toggle password visibility
 export function togglePasswordVisibility(inputId, toggleElement) {
     const input = document.getElementById(inputId); // Get the input field by ID
@@ -35,6 +40,7 @@ export function handlePasswordBlur(inputId, toggleElement) {
 // Initialize password toggle functionality
 export function initializePasswordToggles() {
     const toggles = document.querySelectorAll(".toggle-password");
+    console.log("initializePasswordToggles function executed");
 
     toggles.forEach((toggle) => {
         const inputId = toggle.getAttribute("data-target");
@@ -76,5 +82,6 @@ export function initializePasswordToggles() {
                 }
             });
         }
+        console.log("Initializing password toggles...");
     });
 }

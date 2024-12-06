@@ -13,6 +13,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    @vite(['resources/js/togglePassword.js'])
+
 </head>
 <body>
   <!-- Navigation Bar (Header) -->
@@ -58,8 +60,9 @@
         <p> Don't have an account? <a href="{{ route('signup.form') }}">Sign up here</a>.</p>
     </form>
 
-    @vite(['resources/js/togglePassword.js', 'resources/js/app.js'])
+   
 
+    @vite(['resources/js/togglePassword.js'])
 
 </body>
 </html>
