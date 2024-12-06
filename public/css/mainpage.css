@@ -530,6 +530,11 @@ main .container .left .profile {
     margin-left: 0; /* Remove any left margin for alignment */
 }
 
+.caption-with-space {
+    margin-top: 20px; /* Add white space above */
+    margin-bottom: 20px; /* Add white space below */
+}
+
 /* =============== Right ============== */
 main .container .right {
     width: 20rem; /* Fixed width */
